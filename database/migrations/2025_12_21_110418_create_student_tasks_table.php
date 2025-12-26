@@ -20,10 +20,10 @@ return new class extends Migration
             $table->dateTime('due_at');
             $table->dateTime('submitted_at')->nullable();
             $table->decimal('total_score',10,2)->default(0);
-            $table->enum('status', ['in_progress', 'completed']);
+            $table->enum('status', ['in_progress', 'completed', 'timed_out', 'locked'])->default('in_progress');
+            $table->integer('violation_count')->default(0); // Menghitung berapa kali dia keluar tab
             $table->timestamps();
         });
-
     }
 
     /**

@@ -9,7 +9,7 @@ class Achievement extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'icon', 'target_value'];
+    protected $fillable = ['title', 'description', 'icon', 'target_value','type'];
 
     public function students()
     {

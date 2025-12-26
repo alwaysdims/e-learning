@@ -10,8 +10,8 @@ class AssignmentQuestion extends Model
     use HasFactory;
 
     protected $fillable = [
-        'task_id', 'question', 'picture', 'answer_a', 'answer_b',
-        'answer_c', 'answer_d', 'answer_e', 'correct_answer'
+        'task_id', 'question','question_type', 'picture', 'answer_a', 'answer_b',
+        'answer_c', 'answer_d', 'answer_e', 'correct_answer','score'
     ];
 
     public function task()

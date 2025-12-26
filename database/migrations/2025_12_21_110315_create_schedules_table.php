@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignId('class_id')->constrained('classes')->cascadeOnDelete();
             $table->foreignId('teacher_id')->constrained('teachers')->cascadeOnDelete();
             $table->string('day');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->time('start_date');
+            $table->time('end_date');
             $table->timestamps();
         });
 

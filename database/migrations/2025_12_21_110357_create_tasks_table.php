@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->integer('total_questions')->default(0);
-            $table->enum('type',['Ujian','Tugas','Ulangan']);
+            $table->enum('type', ['Pilihan Ganda', 'Essay', 'Campuran']);
             $table->decimal('max_score',10,2)->default(100.00);
             $table->timestamps();
         });

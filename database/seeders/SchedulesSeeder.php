@@ -44,14 +44,14 @@ class SchedulesSeeder extends Seeder
             ['day'=>'Friday','class'=>2,'subject'=>1,'teacher'=>1,'start'=>'10:00','end'=>'10:45'],
         ];
 
-        foreach ($schedules as $i => $item) {
+        foreach ($schedules as $item) {
             Schedule::create([
                 'subject_id' => $item['subject'],
                 'class_id' => $item['class'],
                 'teacher_id' => $item['teacher'],
                 'day' => $item['day'],
-                'start_date' => $baseDate->copy()->addDays($i)->setTimeFromTimeString($item['start']),
-                'end_date' => $baseDate->copy()->addDays($i)->setTimeFromTimeString($item['end']),
+                'start_date' => $item['start'], // TIME
+                'end_date' => $item['end'],     // TIME
             ]);
         }
     }

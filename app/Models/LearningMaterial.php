@@ -9,7 +9,7 @@ class LearningMaterial extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['teacher_id', 'subject_id', 'title', 'content', 'is_published'];
+    protected $fillable = ['teacher_id', 'subject_id', 'title', 'content'];
 
     public function teacher()
     {

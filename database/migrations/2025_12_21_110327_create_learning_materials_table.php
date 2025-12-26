@@ -16,8 +16,7 @@ return new class extends Migration
             $table->foreignId('teacher_id')->constrained('teachers')->cascadeOnDelete();
             $table->foreignId('subject_id')->constrained('subjects')->cascadeOnDelete();
             $table->string('title');
-            $table->text('content');
-            $table->boolean('is_published')->default(false);
+            $table->string('content');
             $table->timestamps();
         });
     }

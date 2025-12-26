@@ -14,14 +14,16 @@ return new class extends Migration
         Schema::create('assignment_questions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('task_id')->constrained('tasks')->cascadeOnDelete();
+            $table->enum('question_type', ['Pilihan Ganda', 'Essay']);
             $table->text('question');
-            $table->string('picture')->nullable();
-            $table->string('answer_a');
-            $table->string('answer_b');
-            $table->string('answer_c');
-            $table->string('answer_d');
-            $table->string('answer_e')->nullable();
-            $table->string('correct_answer');
+            $table->text('picture')->nullable();
+            $table->text('answer_a')->nullable();
+            $table->text('answer_b')->nullable();
+            $table->text('answer_c')->nullable();
+            $table->text('answer_d')->nullable();
+            $table->text('answer_e')->nullable();
+            $table->text('correct_answer')->nullable();
+            $table->decimal('score',10,2);
             $table->timestamps();
         });
     }

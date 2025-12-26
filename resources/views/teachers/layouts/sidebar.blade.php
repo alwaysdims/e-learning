@@ -1,42 +1,61 @@
-  <!-- BEGIN: Side Menu -->
-  <nav class="side-nav">
+<!-- BEGIN: Side Menu -->
+<nav class="side-nav">
     <ul>
+
+        <!-- Dashboard -->
         <li>
-            <a href="side-menu-light-inbox.html" class="side-menu">
-                <div class="side-menu__icon"> <i data-lucide="home"></i> </div>
-                <div class="side-menu__title"> Dashboard </div>
+            <a href="{{ route('teacher.dashboard') }}"
+                class="side-menu {{ request()->routeIs('teacher.dashboard') ? 'side-menu--active' : '' }}">
+                <div class="side-menu__icon">
+                    <i data-lucide="home"></i>
+                </div>
+                <div class="side-menu__title">Dashboard</div>
             </a>
         </li>
+
+        <!-- Materials -->
         <li>
-            <a href="side-menu-light-file-manager.html" class="side-menu">
-                <div class="side-menu__icon"> <i data-lucide="file-text"></i> </div>
-                <div class="side-menu__title"> Materials </div>
+            <a href="{{ route('teacher.materials.index') }}"
+                class="side-menu {{ request()->routeIs('teacher.materials.*') ? 'side-menu--active' : '' }}">
+                <div class="side-menu__icon">
+                    <i data-lucide="file-text"></i>
+                </div>
+                <div class="side-menu__title">Materials</div>
             </a>
         </li>
+
+        <!-- Assignments -->
         <li>
-            <a href="side-menu-light-point-of-sale.html" class="side-menu">
-                <div class="side-menu__icon"> <i data-lucide="layers"></i> </div>
-                <div class="side-menu__title"> Classes </div>
+            <a href="{{ route('teacher.assignments') }}"
+                class="side-menu {{ request()->routeIs('teacher.assignments') ? 'side-menu--active' : '' }}">
+                <div class="side-menu__icon">
+                    <i data-lucide="layers"></i>
+                </div>
+                <div class="side-menu__title">Assignments</div>
             </a>
         </li>
+
+        <!-- Discussion Forum (BELUM ADA ROUTE) -->
         <li>
-            <a href="side-menu-light-chat.html" class="side-menu">
-                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
-                <div class="side-menu__title"> Majors </div>
+            <a href="javascript:;" class="side-menu opacity-60 cursor-not-allowed">
+                <div class="side-menu__icon">
+                    <i data-lucide="users"></i>
+                </div>
+                <div class="side-menu__title">Discussion Forums</div>
             </a>
         </li>
+
+        <!-- Schedules -->
         <li>
-            <a href="side-menu-light-calendar.html" class="side-menu">
-                <div class="side-menu__icon"> <i data-lucide="calendar"></i> </div>
-                <div class="side-menu__title"> Schedules </div>
+            <a href="{{ route('teacher.schedules') }}" class="side-menu {{ request()->routeIs('teacher.schedules') ? 'side-menu--active' : '' }}">
+
+                <div class="side-menu__icon">
+                    <i data-lucide="calendar"></i>
+                </div>
+                <div class="side-menu__title">Schedules</div>
             </a>
         </li>
-        <li>
-            <a href="side-menu-light-post.html" class="side-menu">
-                <div class="side-menu__icon"> <i data-lucide="file-text"></i> </div>
-                <div class="side-menu__title"> Announcements </div>
-            </a>
-        </li>
+
     </ul>
 </nav>
 <!-- END: Side Menu -->

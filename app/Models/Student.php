@@ -10,12 +10,12 @@ class Student extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'address', 'academic_year', 'no_telp', 'class_id', 'major_id'
+        'user_id', 'address','nis', 'academic_year', 'no_telp', 'class_id', 'major_id'
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
     }
 
     public function classRoom()

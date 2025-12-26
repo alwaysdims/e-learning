@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('icon')->nullable();
+            $table->string('type');
             $table->integer('target_value');
             $table->timestamps();
         });
-
     }
 
     /**

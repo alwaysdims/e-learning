@@ -8,10 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class RedirectIfAuthenticated
 {
-    public function handle(Request $request, Closure $next, ...$guards)
+    public function handle(Request $request, Closure $next)
     {
+        // 🔴 SUDAH LOGIN → BLOK LOGIN PAGE (URL TETAP)
         if (Auth::check()) {
-            abort(403, 'ANDA SUDAH LOGIN');
+            return response()->view('errors.403', [], 403); // blank page
         }
 
         return $next($request);

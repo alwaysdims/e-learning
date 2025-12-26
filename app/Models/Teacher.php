@@ -50,4 +50,10 @@ class Teacher extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+
+    public function teacherClasses()
+    {
+        return $this->hasMany(TeacherClass::class);
+    }
 }

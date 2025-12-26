@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('assignment_question_id')->constrained('assignment_questions')->cascadeOnDelete();
             $table->foreignId('student_task_id')->constrained('student_tasks')->cascadeOnDelete();
-            $table->string('answer');
-            $table->boolean('is_correct');
+            $table->text('answer');
+            $table->boolean('is_correct')->nullable();
+            $table->decimal('score_obtained',10,2)->default(0);
             $table->timestamps();
         });
     }

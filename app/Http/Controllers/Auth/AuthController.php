@@ -31,15 +31,15 @@ class AuthController extends Controller
 
             // 3️⃣ Redirect sesuai role
             if ($user->role === 'admin') {
-                return redirect()->route('admin.class');
+                return redirect()->route('admin.classes.index')->with('success', 'Anda berhasil login!');
             }
 
             if ($user->role === 'teacher') {
-                return redirect()->route('teacher.dashboard');
+                return redirect()->route('teacher.dashboard')->with('success', 'Anda berhasil login!');
             }
 
             if ($user->role === 'student') {
-                return redirect()->route('student.dashboard');
+                return redirect()->route('student.dashboard')->with('success', 'Anda berhasil login!');
             }
 
             // fallback (jaga-jaga)

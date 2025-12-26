@@ -11,7 +11,7 @@ class StudentTask extends Model
 
     protected $fillable = [
         'task_id', 'class_id', 'student_id', 'started_at', 'due_at',
-        'submitted_at', 'total_score', 'status'
+        'submitted_at', 'total_score', 'status','profile','birthday'
     ];
 
     public function task()

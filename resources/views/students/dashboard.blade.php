@@ -1,4 +1,4 @@
-@extends('students.layouts.main')
+@extends('students.layouts.main',['title' => 'Dashboard'])
 @section('content')
 
 @endsection

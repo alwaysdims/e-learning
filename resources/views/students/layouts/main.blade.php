@@ -13,12 +13,12 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- BEGIN: Head -->
     <head>
         <meta charset="utf-8">
-        <link href="{{ asset('enigma/compiled') }}/dist/images/logo.svg" rel="shortcut icon">
+        <link href="{{ asset('enigma/compiled') }}/dist/images/logoSkandaGoV4.png" class="logo__image w-100 h-[1000px] mt-2" rel="shortcut icon">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Enigma admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
         <meta name="keywords" content="admin template, Enigma Admin Template, dashboard template, flat admin template, responsive admin template, web app">
         <meta name="author" content="LEFT4CODE">
-        <title>Dashboard - Midone - Tailwind HTML Admin Template</title>
+        <title>SkandaGo | Student {{ $title }}</title>
         <!-- BEGIN: CSS Assets-->
         <link rel="stylesheet" href="{{ asset('enigma/compiled') }}/dist/css/app.css" />
         <!-- END: CSS Assets-->
@@ -29,7 +29,8 @@ License: You must have a valid license purchased only from themeforest(the above
         <div class="mobile-menu md:hidden">
             <div class="mobile-menu-bar">
                 <a href="" class="flex mr-auto">
-                    <img alt="Midone - HTML Admin Template" class="w-6" src="{{ asset('enigma/compiled') }}/dist/images/logo.svg">
+                    <img alt="Midone - HTML Admin Template" class="w-48 h-12"
+                    src="{{ asset('enigma/compiled') }}/dist/images/logoSkandaGoV2.png">
                 </a>
                 <a href="javascript:;" class="mobile-menu-toggler"> <i data-lucide="bar-chart-2" class="w-8 h-8 text-white transform -rotate-90"></i> </a>
             </div>
@@ -111,15 +112,15 @@ License: You must have a valid license purchased only from themeforest(the above
             <div class="h-full flex items-center">
                 <!-- BEGIN: Logo -->
                 <a href="" class="logo -intro-x hidden md:flex xl:w-[180px] block">
-                    <img alt="Midone - HTML Admin Template" class="logo__image w-6" src="{{ asset('enigma/compiled') }}/dist/images/logo.svg">
-                    <span class="logo__text text-white text-lg ml-3"> Enigma </span>
+                        <img alt="Logo SkandaGo" class="logo__image  w-[100px] h-75"
+                            src="{{ asset('enigma/compiled') }}/dist/images/logoSkandaGoV2.png">
                 </a>
                 <!-- END: Logo -->
                 <!-- BEGIN: Breadcrumb -->
                 <nav aria-label="breadcrumb" class="-intro-x h-[45px] mr-auto">
                     <ol class="breadcrumb breadcrumb-light">
                         <li class="breadcrumb-item"><a href="#">Application</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
                     </ol>
                 </nav>
                 <!-- END: Breadcrumb -->
@@ -131,8 +132,8 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="dropdown-menu w-56">
                         <ul class="dropdown-content bg-primary/80 before:block before:absolute before:bg-black before:inset-0 before:rounded-md before:z-[-1] text-white">
                             <li class="p-2">
-                                <div class="font-medium">Al Pacino</div>
-                                <div class="text-xs text-white/60 mt-0.5 dark:text-slate-500">DevOps Engineer</div>
+                                <div class="font-medium">{{ Auth::user()->name }}</div>
+                                <div class="text-xs text-white/60 mt-0.5 dark:text-slate-500">{{ Auth::user()->student->nis }}</div>
                             </li>
                             <li>
                                 <hr class="dropdown-divider border-white/[0.08]">
@@ -147,7 +148,17 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <hr class="dropdown-divider border-white/[0.08]">
                             </li>
                             <li>
-                                <a href="" class="dropdown-item hover:bg-white/5"> <i data-lucide="toggle-right" class="w-4 h-4 mr-2"></i> Logout </a>
+                                <form id="logout-form" action="{{ route('auth.logout') }}" method="post">
+                                    @csrf
+                                    <button type="button"
+                                        onclick="confirmLogout()"
+                                        class="dropdown-item hover:bg-white/5 w-full flex items-center">
+                                        <i data-lucide="toggle-right" class="w-4 h-4 mr-2"></i>
+                                        Logout
+                                    </button>
+                                </form>
+
+
                             </li>
                         </ul>
                     </div>

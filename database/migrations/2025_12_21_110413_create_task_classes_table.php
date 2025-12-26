@@ -21,7 +21,6 @@ return new class extends Migration
             $table->integer('duration')->default(60);
             $table->timestamps();
         });
-
     }
 
     /**

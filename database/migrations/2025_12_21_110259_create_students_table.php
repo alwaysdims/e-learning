@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->string('nis',9)->unique();
+            $table->string('profile')->nullable();
             $table->text('address')->nullable();
             $table->string('academic_year')->nullable();
             $table->string('no_telp')->nullable();
+            $table->date('birthday')->nullable();
             $table->foreignId('class_id')->constrained('classes')->cascadeOnDelete();
             $table->foreignId('major_id')->constrained('majors')->cascadeOnDelete();
             $table->timestamps();
