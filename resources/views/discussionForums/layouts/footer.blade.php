@@ -45,7 +45,6 @@
     // ]]>
 
 </script>
-
 <script>
     function confirmLogout() {
         Swal.fire({
@@ -95,12 +94,12 @@
 </script>
 @endif
 
-@if($errors->any() )
+@if(session('error'))
 <script>
     Swal.fire({
         icon: 'error',
         title: 'Gagal',
-        text: '{!! implode('<br>', $errors->all()) !!}',
+        text: '{{ session('error') }}',
         timer: 2500,
         showConfirmButton: false,
         allowOutsideClick: false,

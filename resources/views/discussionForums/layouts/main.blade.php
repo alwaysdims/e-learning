@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<!--
+Template Name: Enigma - HTML Admin Dashboard Template
+Author: Left4code
+Website: http://www.left4code.com/
+Contact: muhammadrizki@left4code.com
+Purchase: https://themeforest.net/user/left4code/portfolio
+Renew Support: https://themeforest.net/user/left4code/portfolio
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
 <html lang="en" class="light">
 <!-- BEGIN: Head -->
 
@@ -12,7 +21,7 @@
     <meta name="keywords"
         content="admin template, Enigma Admin Template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="LEFT4CODE">
-    <title>SkandaGo | Teacher {{ $title }}</title>
+    <title>SkandaGo | Discussion Forums | {{ $title }}</title>
     <!-- BEGIN: CSS Assets-->
     <link rel="stylesheet" href="{{ asset('enigma/compiled') }}/dist/css/app.css" />
     <!-- END: CSS Assets-->
@@ -35,70 +44,80 @@
                     class="w-8 h-8 text-white transform -rotate-90"></i> </a>
             <ul class="scrollable__content py-2">
 
-                <!-- Dashboard -->
                 <li>
-                    <a href="{{ route('teacher.dashboard') }}"
-                        class="menu {{ request()->routeIs('teacher.dashboard') ? 'menu--active' : '' }}">
+                    <a href="{{ route('student.dashboard') }}"
+                        class="menu {{ request()->routeIs('student.dashboard') ? 'menu--active' : '' }}">
                         <div class="menu__icon">
                             <i data-lucide="home"></i>
                         </div>
-                        <div class="menu__title">Dashboard</div>
+                        <div class="menu__title">
+                            Dashboard
+                        </div>
                     </a>
                 </li>
 
-                <!-- Materials -->
                 <li>
-                    <a href="{{ route('teacher.materials.index') }}"
-                        class="menu {{ request()->routeIs('teacher.materials.*') ? 'menu--active' : '' }}">
+                    <a href="{{ route('student.materials') }}"
+                        class="menu {{ request()->routeIs('student.materials') ? 'menu--active' : '' }}">
+                        <div class="menu__icon">
+                            <i data-lucide="book-open"></i>
+                        </div>
+                        <div class="menu__title">
+                            Materials
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('student.assignments') }}"
+                        class="menu {{ request()->routeIs('student.assignments') ? 'menu--active' : '' }}">
                         <div class="menu__icon">
                             <i data-lucide="file-text"></i>
                         </div>
-                        <div class="menu__title">Materials</div>
-                    </a>
-                </li>
-
-                <!-- Assignments -->
-                <li>
-                    <a href="{{ route('teacher.assignments') }}"
-                        class="menu {{ request()->routeIs('teacher.assignments') ? 'menu--active' : '' }}">
-                        <div class="menu__icon">
-                            <i data-lucide="layers"></i>
+                        <div class="menu__title">
+                            Assignments
                         </div>
-                        <div class="menu__title">Assignments</div>
                     </a>
                 </li>
 
-                <!-- Discussion Forums (BELUM ADA ROUTE) -->
+                {{-- Discussion Forums (tidak diubah) --}}
                 <li>
-                    <a href="{{ route('discussionForums.index') }}" class="menu opacity-60 cursor-not-allowed">
+                    <a href="side-menu-light-file-manager.html" class="menu">
                         <div class="menu__icon">
-                            <i data-lucide="users"></i>
+                            <i data-lucide="message-square"></i>
                         </div>
-                        <div class="menu__title">Discussion Forums</div>
+                        <div class="menu__title">
+                            Discusion Forums
+                        </div>
                     </a>
                 </li>
 
-                <!-- Schedules -->
                 <li>
-                    <a href="{{ route('teacher.schedules') }}"
-                        class="menu {{ request()->routeIs('teacher.schedules') ? 'menu--active' : '' }}">
+                    <a href="{{ route('student.schedules') }}"
+                        class="menu {{ request()->routeIs('student.schedules') ? 'menu--active' : '' }}">
                         <div class="menu__icon">
                             <i data-lucide="calendar"></i>
                         </div>
-                        <div class="menu__title">Schedules</div>
-                    </a>
-                </li>
-                <!-- Announcements -->
-                <li>
-                    <a href="{{ route('teacher.announcements') }}"
-                        class="menu {{ request()->routeIs('teacher.announcements') ? 'menu--active' : '' }}">
-                        <div class="menu__icon">
-                            <i data-lucide="bell"></i>
+                        <div class="menu__title">
+                            Schedules
                         </div>
-                        <div class="menu__title">Announcements</div>
                     </a>
                 </li>
+
+                <li>
+                    <a href="{{ route('student.announcements') }}"
+                        class="menu {{ request()->routeIs('student.announcements') ? 'menu--active' : '' }}">
+                        <div class="menu__icon">
+                            <i data-lucide="file-text"></i>
+                        </div>
+                        <div class="menu__title">
+                            Announcements
+                        </div>
+                    </a>
+                </li>
+
             </ul>
+
         </div>
     </div>
     <!-- END: Mobile Menu -->
@@ -110,7 +129,6 @@
             <a href="" class="logo -intro-x hidden md:flex xl:w-[180px] block">
                 <img alt="Logo SkandaGo" class="logo__image  w-[100px] h-75"
                     src="{{ asset('enigma/compiled') }}/dist/images/logoSkandaGoV2.png">
-                {{-- <span class="logo__text text-white text-lg ml-3"> Enigma </span> --}}
             </a>
             <!-- END: Logo -->
             <!-- BEGIN: Breadcrumb -->
@@ -125,8 +143,11 @@
             <div class="intro-x dropdown w-8 h-8">
                 <div class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in scale-110"
                     role="button" aria-expanded="false" data-tw-toggle="dropdown">
-                    <img alt="Midone - HTML Admin Template"
-                        src="{{ asset('enigma/compiled') }}/dist/images/profile-6.jpg">
+                    <div class="w-full h-full bg-primary/20 flex items-center justify-center">
+                        <span class="text-sm font-bold  text-white">
+                            {{ Str::upper(Str::limit(Auth::user()->name ?? 'S', 2, '')) }}
+                        </span>
+                    </div>
                 </div>
                 <div class="dropdown-menu w-56">
                     <ul
@@ -134,16 +155,16 @@
                         <li class="p-2">
                             <div class="font-medium">{{ Auth::user()->name }}</div>
                             <div class="text-xs text-white/60 mt-0.5 dark:text-slate-500">
-                                {{ Auth::user()->teacher->nip }}
-                            </div>
+                                {{ Auth::user()->student->nis }}</div>
                         </li>
                         <li>
                             <hr class="dropdown-divider border-white/[0.08]">
                         </li>
                         <li>
-                            <a href="{{ route('teacher.profile') }}" class="dropdown-item hover:bg-white/5"> <i data-lucide="user"
+                            <a href="" class="dropdown-item hover:bg-white/5"> <i data-lucide="user"
                                     class="w-4 h-4 mr-2"></i> Profile </a>
                         </li>
+
                         <li>
                             <form id="logout-form" action="{{ route('auth.logout') }}" method="post">
                                 @csrf
@@ -153,6 +174,8 @@
                                     Logout
                                 </button>
                             </form>
+
+
                         </li>
                     </ul>
                 </div>
@@ -162,14 +185,14 @@
     </div>
     <!-- END: Top Bar -->
     <div class="flex overflow-hidden">
-        @include('teachers.layouts.sidebar')
         <!-- BEGIN: Content -->
+        @include('discussionForums.layouts.sidebar')
         <div class="content">
                 @yield('content')
         </div>
         <!-- END: Content -->
     </div>
-    @include('teachers.layouts.footer')
+    @include('discussionForums.layouts.footer')
 </body>
 
 </html>

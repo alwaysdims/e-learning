@@ -13,7 +13,7 @@ class Comment extends Model
 
     public function forum()
     {
-        return $this->belongsTo(DiscussionForum::class);
+        return $this->belongsTo(DiscussionForum::class,'forum_id');
     }
 
     public function user()

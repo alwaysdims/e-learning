@@ -16,10 +16,34 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['role:student'])->prefix('student')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Student\DashboardController::class, 'index'])->name('student.dashboard');
+
+    // profile
+    Route::get('/profile',[App\Http\Controllers\Student\DashboardController::class,'profile'])->name('student.profile');
+
+    //materials
+    Route::get('/materials',[App\Http\Controllers\Student\MaterialController::class,'index'])->name('student.materials');
+
+    //assignments
+    Route::get('/assignments',[App\Http\Controllers\Student\AssignmentController::class,'index'])->name('student.assignments');
+    Route::get('/assignments/{id}', [App\Http\Controllers\Student\AssignmentController::class, 'show'])->name('student.assignments.show');
+    Route::get('/assignments/{id}/kerjakan', [App\Http\Controllers\Student\AssignmentController::class, 'start'])->name('student.assignment.start');
+    Route::post('/assignments/submit', [App\Http\Controllers\Student\AssignmentController::class, 'submit'])->name('student.assignment.submit');
+
+    //schedules
+    Route::get('/schedules',[App\Http\Controllers\Student\ScheduleController::class,'index'])->name('student.schedules');
+
+    //announcements
+    Route::get('/announcements',[App\Http\Controllers\Student\AnnouncementController::class,'index'])->name('student.announcements');
+
+
+
 });
 
 Route::middleware(['role:teacher'])->prefix('teacher')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Teacher\DashboardController::class, 'index'])->name('teacher.dashboard');
+
+    Route::get('/profile',[App\Http\Controllers\Teacher\DashboardController::class,'profile'])->name('teacher.profile');
+    Route::post('/profile',[App\Http\Controllers\Teacher\DashboardController::class,'profileStore'])->name('teacher.profileStore');
 
     // assignments
     Route::get('/assignments', [App\Http\Controllers\Teacher\AssignmentController::class, 'index'])->name('teacher.assignments');
@@ -49,9 +73,13 @@ Route::middleware(['role:teacher'])->prefix('teacher')->group(function () {
 
     // assignment monitor
     Route::get('/assignments/management/{id}/monitor', [App\Http\Controllers\Teacher\AssignmentController::class, 'monitorStudent'])->name('teacher.assignment.monitor');
+    Route::post('/assignments/management/{id}/monitor', [App\Http\Controllers\Teacher\AssignmentController::class, 'monitorStudentResetLock']) ->name('teacher.assignment.monitor.resetLock');
 
     // schedules
     Route::get('/schedules', [App\Http\Controllers\Teacher\ScheduleController::class, 'index'])->name('teacher.schedules');
+
+    // announcements
+    Route::get('/announcements', [App\Http\Controllers\Teacher\AnnouncementController::class, 'index'])->name('teacher.announcements');
 
     // materials
     Route::get('/materials', [\App\Http\Controllers\Teacher\MaterialController::class, 'index'])->name('teacher.materials.index');
@@ -94,4 +122,16 @@ Route::middleware(['role:admin'])->prefix('admin')->group(function () {
 
     Route::resource('user/student', App\Http\Controllers\Admin\Users\StudentController::class)
         ->names('admin.user.student');
+});
+
+
+Route::middleware(['role:student,teacher'])->prefix('discussion-forums')->group(function (){
+    Route::get('/', [App\Http\Controllers\DiscussionForum\DiscussionForumController::class, 'index'])->name('discussionForums.index');
+    Route::get('/{id}', [App\Http\Controllers\DiscussionForum\DiscussionForumController::class, 'show'])->name('discussionForums.show');
+    Route::post('/store', [App\Http\Controllers\DiscussionForum\DiscussionForumController::class, 'store'])->name('discussionForums.store');
+    Route::post('/{id}/comment/store', [App\Http\Controllers\DiscussionForum\DiscussionForumController::class, 'storeComment'])->name('discussionForums.storeComment');
+    Route::put('/{id}', [App\Http\Controllers\DiscussionForum\DiscussionForumController::class, 'update'])->name('discussionForums.update');
+    Route::delete('/{id}', [App\Http\Controllers\DiscussionForum\DiscussionForumController::class, 'destroy'])->name('discussionForums.destroy');
+    Route::get('/discussion-forums/{id}/comments', [App\Http\Controllers\DiscussionForum\DiscussionForumController::class, 'fetchComments'])->name('discussionForums.fetchComments');
+
 });

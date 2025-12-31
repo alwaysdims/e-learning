@@ -9,9 +9,10 @@ class StudentTask extends Model
 {
     use HasFactory;
 
+    protected $table = 'student_tasks';
     protected $fillable = [
         'task_id', 'class_id', 'student_id', 'started_at', 'due_at',
-        'submitted_at', 'total_score', 'status','profile','birthday'
+        'submitted_at', 'total_score', 'status'
     ];
 
     public function task()

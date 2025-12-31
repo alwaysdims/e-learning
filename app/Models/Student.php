@@ -10,7 +10,7 @@ class Student extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'address','nis', 'academic_year', 'no_telp', 'class_id', 'major_id'
+        'user_id', 'address','nis', 'academic_year', 'no_telp', 'class_id', 'major_id','profile','birthday'
     ];
 
     public function user()

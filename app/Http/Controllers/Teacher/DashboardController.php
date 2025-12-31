@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Teacher;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\Schedule;
 use App\Models\Announcement;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class DashboardController extends Controller
 {
@@ -62,5 +65,44 @@ class DashboardController extends Controller
             'newAnnouncements',
             'todayDate'
         ));
+    }
+
+    // Tampilkan halaman profile
+    public function profile()
+    {
+        $user = Auth::user();
+        $teacher = $user->teacher; // Pastikan relasi teacher sudah ada
+
+        return view('teachers.profile', compact('user', 'teacher'));
+    }
+
+    // Update profile
+    public function profileStore(Request $request)
+    {
+        $user = Auth::user();
+        $teacher = $user->teacher;
+
+        $validated = $request->validate([
+            'email'    => 'required|email|unique:users,email,' . $user->id,
+            'password' => ['nullable', 'confirmed', Password::min(8)],
+            'address'  => 'nullable|string|max:255',
+            'no_telp'  => 'nullable|string|max:20',
+        ]);
+
+        // Update user
+        $user->update([
+            'email'    => $validated['email'],
+            'password' => $request->filled('password')
+                ? Hash::make($validated['password'])
+                : $user->password,
+        ]);
+
+        // Update teacher
+        $teacher->update([
+            'address' => $validated['address'] ?? null,
+            'no_telp' => $validated['no_telp'] ?? null,
+        ]);
+
+        return back()->with('success', 'Profil berhasil diperbarui');
     }
 }

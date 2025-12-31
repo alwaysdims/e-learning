@@ -37,7 +37,7 @@
 
         <!-- Discussion Forum (BELUM ADA ROUTE) -->
         <li>
-            <a href="javascript:;" class="side-menu opacity-60 cursor-not-allowed">
+            <a href="{{ route('discussionForums.index') }}" class="side-menu opacity-60 cursor-not-allowed">
                 <div class="side-menu__icon">
                     <i data-lucide="users"></i>
                 </div>
@@ -53,6 +53,16 @@
                     <i data-lucide="calendar"></i>
                 </div>
                 <div class="side-menu__title">Schedules</div>
+            </a>
+        </li>
+        <!-- announcement -->
+        <li>
+            <a href="{{ route('teacher.announcements') }}" class="side-menu {{ request()->routeIs('teacher.announcements') ? 'side-menu--active' : '' }}">
+
+                <div class="side-menu__icon">
+                    <i data-lucide="bell"></i>
+                </div>
+                <div class="side-menu__title">Announcements</div>
             </a>
         </li>
 

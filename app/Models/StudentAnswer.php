@@ -9,6 +9,8 @@ class StudentAnswer extends Model
 {
     use HasFactory;
 
+    protected $table = 'student_answers';
+
     protected $fillable = ['assignment_question_id', 'student_task_id', 'answer', 'is_correct'];
 
     public function question()

@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Models\Task;
 use App\Models\Schedule;
+use App\Models\ClassRoom;
 use App\Models\TaskClass;
+use App\Models\StudentTask;
 use Illuminate\Http\Request;
 use App\Models\AssignmentQuestion;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AssignmentController extends Controller
 {
@@ -506,8 +508,79 @@ class AssignmentController extends Controller
 
         return redirect()->back()->with('success', 'Soal essay berhasil dihapus.');
     }
-    public function monitorStudent($id)
+    // Monitor Siswa untuk tugas tertentu
+    public function monitorStudent(Request $request, $id)
     {
-        return view('teachers.monitorStudent');
+        $teacherId = Auth::user()->teacher->id;
+
+        $task = Task::where('teacher_id', $teacherId)->findOrFail($id);
+
+        // Ambil kelas yang dipublish tugas ini
+        $publishedClasses = TaskClass::where('task_id', $id)
+            ->pluck('class_id')
+            ->toArray();
+
+        $query = StudentTask::where('task_id', $id)
+            ->whereIn('class_id', $publishedClasses)
+            ->with(['student.user', 'classRoom']);
+
+        // Search nama siswa
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->whereHas('student.user', function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter kelas
+        if ($request->filled('class_id')) {
+            $query->where('class_id', $request->class_id);
+        }
+
+        // Filter status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $studentTasks = $query->latest('started_at')->paginate(10)->withQueryString();
+
+        // Dropdown kelas yang dipublish tugas ini
+        $classes = ClassRoom::whereIn('id', $publishedClasses)
+            ->pluck('name', 'id');
+
+        $statuses = ['in_progress', 'completed', 'timed_out', 'locked'];
+
+        return view('teachers.monitorStudent', compact(
+            'task',
+            'studentTasks',
+            'classes',
+            'statuses'
+        ));
+    }
+
+    // Reset Lock (ubah status locked → in_progress)
+    public function monitorStudentResetLock(Request $request, $id)
+    {
+        $teacherId = Auth::user()->teacher->id;
+
+        $task = Task::where('teacher_id', $teacherId)->findOrFail($id);
+
+        $request->validate([
+            'student_task_id' => 'required|exists:student_tasks,id,task_id,' . $id,
+        ]);
+
+        $studentTask = StudentTask::where('task_id', $id)
+            ->findOrFail($request->student_task_id);
+
+        if ($studentTask->status !== 'locked') {
+            return redirect()->back()->with('error', 'Status siswa bukan locked.');
+        }
+
+        $studentTask->update([
+            'status' => 'in_progress',
+            'violation_count' => 0, // optional: reset pelanggaran
+        ]);
+
+        return redirect()->back()->with('success', 'Lock berhasil dibuka. Siswa dapat melanjutkan tugas.');
     }
 }

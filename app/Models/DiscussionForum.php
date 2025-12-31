@@ -9,6 +9,8 @@ class DiscussionForum extends Model
 {
     use HasFactory;
 
+    protected $table = 'discussion_forums';
+
     protected $fillable = ['title', 'teacher_id', 'subject_id', 'class_id'];
 
     public function teacher()
@@ -33,6 +35,6 @@ class DiscussionForum extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class,'forum_id');
     }
 }

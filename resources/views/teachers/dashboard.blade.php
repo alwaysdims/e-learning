@@ -5,13 +5,21 @@
     <div class="flex flex-col lg:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
         <!-- Profile Section -->
         <div class="flex flex-1 items-center justify-center lg:justify-start">
-            <div class="relative">
-                <div
-                    class="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-white dark:border-darkmode-700 shadow-md">
-                    <img alt="Profil Guru" class="w-full h-full object-cover"
-                        src="{{ asset('Enigma/Compiled/dist/images/profile.png') }}">
+            <div class="relative inline-block">
+                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-4 border-white dark:border-darkmode-700 shadow-lg bg-slate-200 flex items-center justify-center">
+                    @if($teacher->user->profile_photo ?? false)
+                        {{-- Jika Ada Foto --}}
+                        <img alt="Profile Photo" class="w-full h-full object-cover" src="{{ asset('storage/' . $teacher->user->profile_photo) }}">
+                    @else
+                        {{-- Fallback Inisial Nama --}}
+                        <div class="w-full h-full bg-primary/20 flex items-center justify-center">
+                            <span class="text-xl sm:text-2xl font-bold text-primary">
+                                {{ Str::upper(Str::limit($teacher->user->name ?? 'G', 1, '')) }}{{ Str::upper(Str::substr($teacher->user->name ?? 'U', 1, 1)) }}
+                            </span>
+                        </div>
+                    @endif
                 </div>
-            </div>
+             </div>
 
             <div class="ml-5">
                 <h2 class="text-xl lg:text-2xl font-bold text-slate-800 dark:text-slate-100">
